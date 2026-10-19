@@ -24,6 +24,27 @@ input,button{font-family:inherit}
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <div data-screen-label="메인" style="display:flex;flex-direction:column;flex:1">
+    <sc-if value="{{ isOHead }}" hint-placeholder-val="{{ true }}">
+      <div style="position:sticky;top:0;z-index:5;background:#fff;padding:50px 16px 14px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #f1f2f4">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="width:38px;height:38px;border-radius:12px;background:{{ t.main }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;font-weight:900;letter-spacing:-0.05em">청</div>
+            <div style="display:flex;flex-direction:column;gap:1px">
+              <span style="font-size:20px;font-weight:900;letter-spacing:-0.05em;color:#17191c;line-height:1.1">청담</span>
+              <span style="font-size:11px;font-weight:600;color:#7a8089">청소에 진심을 담다</span>
+            </div>
+          </div>
+          <button onClick="{{ goNear }}" style="display:flex;align-items:center;gap:4px;height:34px;padding:0 12px 0 8px;border-radius:17px;border:1px solid {{ t.line }};background:{{ t.soft }};color:{{ t.deep }};font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap">
+            <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-variation-settings:'FILL' 1,'wght' 500;font-feature-settings:'liga'">location_on</span>역삼동 <span style="font-size:9px">▼</span>
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;height:48px;padding:0 6px 0 12px;border-radius:14px;border:2px solid {{ t.main }};background:#fff">
+          <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;color:{{ t.main }};font-variation-settings:'FILL' 0,'wght' 600;font-feature-settings:'liga'">search</span>
+          <input value="{{ query }}" onChange="{{ onQuery }}" onKeyDown="{{ onQueryKey }}" placeholder="업체명, 시공 종류를 검색하세요" style="flex:1;min-width:0;border:0;outline:none;font-size:15px;background:transparent;color:#17191c">
+          <button onClick="{{ doSearch }}" style="flex:none;height:34px;padding:0 14px;border-radius:9px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">검색</button>
+        </div>
+      </div>
+    </sc-if>
     <sc-if value="{{ isColorHead }}" hint-placeholder-val="{{ true }}">
       <div style="position:sticky;top:0;z-index:5;background:{{ t.main }};padding:50px 16px 16px;display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;justify-content:space-between">
@@ -53,6 +74,45 @@ input,button{font-family:inherit}
       </div>
     </sc-if>
 
+    <sc-if value="{{ bannerFull }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:0;display:flex;flex-direction:column;gap:10px">
+        <div style="position:relative;height:150px;border-radius:0;overflow:hidden;background:{{ t.soft }};display:flex;align-items:center">
+          <div style="position:relative;z-index:1;flex:1;min-width:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:7px">
+            <span style="align-self:flex-start;font-size:11px;font-weight:800;padding:3px 8px;border-radius:5px;background:{{ t.main }};color:#fff">견적은 전화로 무료</span>
+            <span style="font-size:19px;font-weight:900;line-height:1.3;color:#17191c;letter-spacing:-0.04em">전화 한 통으로<br><span style="color:{{ t.deep }}">우리 동네 견적 비교</span></span>
+            <span style="font-size:12px;font-weight:600;color:#5b6169">로그인 없이 바로 연결돼요</span>
+          </div>
+          <div style="flex:none;width:124px;height:124px;margin-right:16px;border-radius:50%;overflow:hidden;border:5px solid #fff;background:#fff">
+            <img src="{{ bannerImg }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:5px;padding-top:2px">
+          <span style="width:18px;height:6px;border-radius:3px;background:{{ t.main }}"></span>
+          <span style="width:6px;height:6px;border-radius:3px;background:#dfe2e6"></span>
+          <span style="width:6px;height:6px;border-radius:3px;background:#dfe2e6"></span>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ bannerBoxed }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:16px 16px 0;display:flex;flex-direction:column;gap:10px">
+        <div style="position:relative;height:140px;border-radius:20px;overflow:hidden;background:{{ t.soft }};display:flex;align-items:center">
+          <div style="position:relative;z-index:1;flex:1;min-width:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:7px">
+            <span style="align-self:flex-start;font-size:11px;font-weight:800;padding:3px 8px;border-radius:5px;background:{{ t.main }};color:#fff">견적은 전화로 무료</span>
+            <span style="font-size:19px;font-weight:900;line-height:1.3;color:#17191c;letter-spacing:-0.04em">전화 한 통으로<br><span style="color:{{ t.deep }}">우리 동네 견적 비교</span></span>
+            <span style="font-size:12px;font-weight:600;color:#5b6169">로그인 없이 바로 연결돼요</span>
+          </div>
+          <div style="flex:none;width:124px;height:124px;margin-right:-14px;border-radius:50%;overflow:hidden;border:5px solid #fff;background:#fff">
+            <img src="{{ bannerImg }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:5px">
+          <span style="width:18px;height:6px;border-radius:3px;background:{{ t.main }}"></span>
+          <span style="width:6px;height:6px;border-radius:3px;background:#dfe2e6"></span>
+          <span style="width:6px;height:6px;border-radius:3px;background:#dfe2e6"></span>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ notOHead }}" hint-placeholder-val="{{ false }}">
     <div style="padding:14px 16px 0">
       <div style="position:relative;height:150px;border-radius:16px;overflow:hidden;background:{{ t.soft }}">
         <img src="{{ bannerImg }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
@@ -65,6 +125,7 @@ input,button{font-family:inherit}
         <span style="position:absolute;right:12px;bottom:10px;font-size:11px;font-weight:600;color:#fff;padding:2px 8px;border-radius:10px;background:rgba(0,0,0,0.45)">1 / 3</span>
       </div>
     </div>
+    </sc-if>
 
     <div style="padding:26px 16px 6px;display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:baseline;justify-content:space-between">
@@ -453,7 +514,7 @@ input,button{font-family:inherit}
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;orange&quot;,&quot;blue&quot;],&quot;default&quot;:&quot;orange&quot;,&quot;tsType&quot;:&quot;'orange'|'blue'&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;'default'|'large'&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;orange&quot;,&quot;blue&quot;],&quot;default&quot;:&quot;orange&quot;,&quot;tsType&quot;:&quot;'orange'|'blue'&quot;},&quot;header&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;white&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;'color'|'white'&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;'default'|'large'&quot;}}">
 const U = id => `https://images.unsplash.com/photo-${id}?w=640&q=70&auto=format&fit=crop`;
 const IMG = {
   apt:'1502672260266-1c1ef2d93688', clean:'1581578731548-c64695cc6952', spray:'1527515637462-cff94eecc1ac', mop:'1563453392212-326f5e854473',
@@ -531,6 +592,7 @@ class Component extends DCLogic {
       addr:b.kind==='near'?b.area:b.area, svc:b.tags.join(' · '), meta:b.kind==='near'?dt(b.dist):b.cat==='소파·매트리스·에어컨'?'홈케어':b.cat, distText:b.kind==='near'?dt(b.dist):'',
       onOpen:()=>this.open(b.key), onCall:e=>{e.stopPropagation();this.call(b.key);}};
   }
+  headMode(theme){return this.props.header||(theme==='orange'&&this.props.layout!=='large'?'white':'color');}
   renderVals(){
     const s=this.state, theme=this.props.theme||'orange', t=THEMES[theme]||THEMES.orange, r=s.region;
     const regionLabel=r.mode==='all'?'전국':r.si?`${r.sido.replace(/(특별자치도|도|시)$/,'')} ${r.si}`:r.sido;
@@ -560,8 +622,8 @@ class Component extends DCLogic {
     const isEmpty=rows.length===0;
     return {
       t, isO:theme==='orange', isB:theme!=='orange', scrollRef:this.scrollRef,
-      isLarge:this.props.layout==='large', isColorHead:theme==='orange'||this.props.layout==='large', isWhiteHead:theme!=='orange'&&this.props.layout!=='large', notLarge:this.props.layout!=='large',
-      isOStd:theme==='orange'&&this.props.layout!=='large', isBStd:theme!=='orange'&&this.props.layout!=='large',
+      isLarge:this.props.layout==='large', isColorHead:this.headMode(theme)==='color', isWhiteHead:false, isOHead:this.headMode(theme)==='white', bannerFull:this.headMode(theme)==='white'&&this.props.layout==='large', bannerBoxed:this.headMode(theme)==='white'&&this.props.layout!=='large', notOHead:this.headMode(theme)!=='white', notLarge:this.props.layout!=='large',
+      isOStd:this.props.layout!=='large', notOStd:this.props.layout==='large', isBStd:false,
       catIcons:CATS.map(([l,k])=>({label:l,icon:({'입주청소':'home','이사청소':'mop','이사업체':'local_shipping','줄눈':'grid_on','소파·매트리스·에어컨':'weekend','탄성코트':'format_paint'})[l],img:U(IMG[k]),onClick:()=>this.nav({screen:'list',list:'cat',cat:l})})),
       imgErr:e=>{e.currentTarget.style.visibility='hidden';},
       isHome:s.screen==='home', isList:s.screen==='list', isDetail:s.screen==='detail', showTabs:s.screen!=='detail',
