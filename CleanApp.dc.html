@@ -30,9 +30,14 @@ input,button{font-family:inherit}
             <img src="./assets/logo.svg" alt="청담" style="height:30px;width:auto;display:block;flex:none">
             <span style="align-self:flex-end;padding-bottom:3px;font-size:13px;font-weight:500;color:{{ t.sub }}">청소에 진심을 담다</span>
           </div>
+          <div style="flex:none;display:flex;align-items:center;gap:4px">
           <button onClick="{{ goNear }}" style="display:flex;align-items:center;gap:4px;height:34px;padding:0 12px 0 8px;border-radius:17px;border:1px solid {{ t.divider }};background:{{ t.tagBg }};color:{{ t.ink }};font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">
             <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-variation-settings:'FILL' 1,'wght' 500;font-feature-settings:'liga'">location_on</span>역삼동 <span style="font-size:13px">▼</span>
           </button>
+            <button onClick="{{ onLoginBtn }}" aria-label="{{ loginLabel }}" title="{{ loginLabel }}" style="flex:none;width:34px;height:34px;padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:{{ t.ink }}">
+              <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;font-variation-settings:'FILL' {{ loginFill }},'wght' 500;font-feature-settings:'liga'">account_circle</span>
+            </button>
+          </div>
         </div>
       </div>
       <div style="position:sticky;top:0;z-index:5;background:#fff;padding:14px 22px 16px;border-bottom:{{ headLine }}">
@@ -491,8 +496,8 @@ class Component extends DCLogic {
       siList:[{label:`${s.tmpSido} 전체`,si:''},...subs.map(x=>({label:x,si:x}))].map(o=>{const on=curSi===(o.si||'_');return {label:o.label,n:cnt(s.tmpSido,o.si)||'',color:on?t.deep:'#17191c',weight:on?800:500,
         onClick:()=>this.setState({region:{mode:'sido',sido:s.tmpSido,si:o.si},sheet:null})};}),
       c:{name:cb.name,phone:cb.phone,tel:'tel:'+cb.phone.replace(/-/g,'')},
-      loginTitle:s.loginFor==='kakao'?'카카오톡 상담은 로그인이 필요해요':'네이버 톡톡 상담은 로그인이 필요해요',
-      doLogin:()=>{const k=s.loginFor;this.setState({loggedIn:true,sheet:null},()=>this.special(k,d0));},
+      loginTitle:s.loginFor==="kakao"?"카카오톡 상담은 로그인이 필요해요":s.loginFor==="naver"?"네이버 톡톡 상담은 로그인이 필요해요":"간편하게 로그인하세요",
+      doLogin:()=>{const k=s.loginFor;this.setState({loggedIn:true,sheet:null},()=>{if(k)this.special(k,d0);else this.toast("로그인했어요");});}, loginLabel:s.loggedIn?"로그아웃":"로그인", loginFill:s.loggedIn?1:0, onLoginBtn:()=>{if(this.state.loggedIn){this.setState({loggedIn:false});this.toast("로그아웃했어요");}else this.setState({sheet:"login",loginFor:""});},
       hasToast:!!s.toast, toast:s.toast
     };
   }
