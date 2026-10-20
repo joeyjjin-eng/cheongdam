@@ -24,6 +24,7 @@ input,button{font-family:inherit}
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <div data-screen-label="메인" style="display:flex;flex-direction:column;flex:1">
+    <sc-if value="{{ isOHead }}" hint-placeholder-val="{{ true }}">
       <div style="background:#fff;padding:30px 22px 2px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
           <div style="display:flex;align-items:center;gap:9px">
@@ -47,7 +48,41 @@ input,button{font-family:inherit}
           <button onClick="{{ doSearch }}" style="flex:none;height:34px;padding:0 14px;border-radius:9px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">검색</button>
         </div>
       </div>
+    </sc-if>
+    <sc-if value="{{ isColorHead }}" hint-placeholder-val="{{ true }}">
+      <div style="background:{{ t.main }};padding:30px 16px 2px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:baseline;gap:7px"><span style="font-size:26px;font-weight:800;letter-spacing:0;color:#fff">청담</span><span style="font-size:13px;font-weight:500;color:#fff">청소에 진심을 담다</span></div>
+          <button onClick="{{ goNear }}" style="display:flex;align-items:center;gap:5px;height:32px;padding:0 12px;border-radius:16px;border:0;background:rgba(255,255,255,0.22);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">
+            <span style="width:6px;height:6px;border-radius:50%;background:#fff"></span>역삼동 <span style="font-size:13px">▼</span>
+          </button>
+        </div>
+      </div>
+      <div style="position:sticky;top:0;z-index:5;background:{{ t.main }};padding:12px 16px 16px">
+        <div style="display:flex;align-items:center;gap:10px;height:46px;padding:0 6px 0 16px;border-radius:23px;background:#fff">
+          <input value="{{ query }}" onChange="{{ onQuery }}" onKeyDown="{{ onQueryKey }}" placeholder="업체명, 시공 종류를 검색하세요" style="flex:1;min-width:0;border:0;outline:none;font-size:15px;background:transparent;color:{{ t.title }}">
+          <button onClick="{{ doSearch }}" style="flex:none;height:34px;padding:0 14px;border-radius:17px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">검색</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isWhiteHead }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;padding:30px 16px 2px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:baseline;gap:7px"><span style="font-size:26px;font-weight:800;letter-spacing:0;color:{{ t.main }}">청담</span><span style="font-size:13px;font-weight:500;color:{{ t.sub }}">청소에 진심을 담다</span></div>
+          <button onClick="{{ goNear }}" style="display:flex;align-items:center;gap:5px;border:0;background:none;color:{{ t.title }};font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap">
+            <span style="width:7px;height:7px;border-radius:50%;background:{{ t.main }}"></span>서울 강남구 역삼동 <span style="font-size:13px;color:{{ t.sub }}">▼</span>
+          </button>
+        </div>
+      </div>
+      <div style="position:sticky;top:0;z-index:5;background:#fff;padding:12px 16px 14px;border-bottom:1px solid {{ t.divider }}">
+        <div style="display:flex;align-items:center;gap:10px;height:46px;padding:0 6px 0 16px;border-radius:12px;background:{{ t.tagBg }}">
+          <input value="{{ query }}" onChange="{{ onQuery }}" onKeyDown="{{ onQueryKey }}" placeholder="업체명, 시공 종류를 검색하세요" style="flex:1;min-width:0;border:0;outline:none;font-size:15px;background:transparent;color:{{ t.title }}">
+          <button onClick="{{ doSearch }}" style="flex:none;height:34px;padding:0 12px;border-radius:9px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">검색</button>
+        </div>
+      </div>
+    </sc-if>
 
+    <sc-if value="{{ bannerFull }}" hint-placeholder-val="{{ true }}">
       <div style="padding:0">
         <div style="position:relative;margin:0 22px;height:150px;border-radius:18px;overflow:hidden;background:{{ t.bannerBg }}">
           <img src="{{ bannerImg }}" onError="{{ imgErr }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 42%;display:block">
@@ -58,12 +93,47 @@ input,button{font-family:inherit}
           </div>
         </div>
       </div>
+    </sc-if>
+    <sc-if value="{{ bannerBoxed }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:16px 16px 0;display:flex;flex-direction:column;gap:10px">
+        <div style="position:relative;height:140px;border-radius:20px;overflow:hidden;background:{{ t.surf }};display:flex;align-items:center">
+          <div style="position:relative;z-index:1;flex:1;min-width:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:7px">
+            <span style="align-self:flex-start;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;background:{{ t.point }};color:#fff">견적은 전화로 무료</span>
+            <span style="font-size:20px;font-weight:800;line-height:1.3;color:{{ t.title }};letter-spacing:0">전화 한 통으로<br><span style="color:{{ t.deep }}">우리 동네 견적 비교</span></span>
+            <span style="font-size:13px;font-weight:500;color:{{ t.ink }}">로그인 없이 바로 연결돼요</span>
+          </div>
+          <div style="flex:none;width:124px;height:124px;margin-right:-14px;border-radius:50%;overflow:hidden;border:5px solid #fff;background:#fff">
+            <img src="{{ bannerImg }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:5px">
+          <span style="width:18px;height:6px;border-radius:3px;background:{{ t.main }}"></span>
+          <span style="width:6px;height:6px;border-radius:3px;background:#dfe2e6"></span>
+          <span style="width:6px;height:6px;border-radius:3px;background:#dfe2e6"></span>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ notOHead }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:14px 16px 0">
+      <div style="position:relative;height:150px;border-radius:16px;overflow:hidden;background:{{ t.surf }}">
+        <img src="{{ bannerImg }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,12,16,0.72) 0%,rgba(10,12,16,0.25) 70%,rgba(10,12,16,0) 100%)"></div>
+        <div style="position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:6px">
+          <span style="align-self:flex-start;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;background:{{ t.point }};color:#fff">견적은 전화로 무료</span>
+          <span style="font-size:20px;font-weight:800;line-height:1.3;color:#fff;letter-spacing:0">전화 한 통으로<br>우리 동네 견적 비교</span>
+          <span style="font-size:13px;color:#fff">로그인 없이 바로 연결돼요</span>
+        </div>
+        <span style="position:absolute;right:12px;bottom:10px;font-size:13px;font-weight:500;color:#fff;padding:2px 8px;border-radius:10px;background:rgba(0,0,0,0.45)">1 / 3</span>
+      </div>
+    </div>
+    </sc-if>
 
     <div style="padding:30px 22px 8px;display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:baseline;justify-content:space-between">
         <div style="font-size:20px;font-weight:800;letter-spacing:0">시공 카테고리</div>
         <button onClick="{{ goCatAll }}" style="border:0;background:none;font-size:13px;color:{{ t.sub }};cursor:pointer">전체보기 ›</button>
       </div>
+      <sc-if value="{{ isLarge }}" hint-placeholder-val="{{ false }}">
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 8px">
           <sc-for list="{{ catIcons }}" as="c" hint-placeholder-count="6">
             <button onClick="{{ c.onClick }}" style="border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer">
@@ -74,6 +144,33 @@ input,button{font-family:inherit}
             </button>
           </sc-for>
         </div>
+      </sc-if>
+      <sc-if value="{{ isOStd }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 12px">
+          <sc-for list="{{ catTiles }}" as="c" hint-placeholder-count="6">
+            <button onClick="{{ c.onClick }}" style="border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer">
+              <div style="width:100%;aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:{{ t.surf }};border:2px solid {{ t.surf }}">
+                <img src="{{ c.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+              <span style="font-size:13px;font-weight:700;color:{{ t.title }};white-space:nowrap;letter-spacing:0">{{ c.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isBStd }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+          <sc-for list="{{ catTiles }}" as="c" hint-placeholder-count="6">
+            <button onClick="{{ c.onClick }}" style="position:relative;height:96px;border:0;padding:0;border-radius:14px;overflow:hidden;background:{{ t.surf }};cursor:pointer;text-align:left">
+              <img src="{{ c.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+              <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,20,48,0.78) 0%,rgba(8,20,48,0.1) 75%)"></div>
+              <div style="position:absolute;left:12px;right:12px;bottom:10px;display:flex;align-items:flex-end;justify-content:space-between;gap:6px">
+                <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:0;line-height:1.4">{{ c.label }}</span>
+                <span style="flex:none;font-size:13px;font-weight:500;color:#fff">{{ c.count }}곳</span>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
     </div>
 
     <div style="height:10px;background:{{ t.surf }};margin-top:26px"></div>
@@ -86,6 +183,7 @@ input,button{font-family:inherit}
         </div>
         <button onClick="{{ goNear }}" style="border:0;background:none;font-size:13px;color:{{ t.sub }};cursor:pointer">전체보기 ›</button>
       </div>
+      <sc-if value="{{ isLarge }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-direction:column;gap:18px">
         <sc-for list="{{ nearTop }}" as="it" hint-placeholder-count="2">
           <div onClick="{{ it.onOpen }}" style="margin:0 16px;border-radius:18px;overflow:hidden;background:{{ t.card }};box-shadow:0 6px 18px {{ t.shadow }};cursor:pointer;display:flex;flex-direction:column">
@@ -111,6 +209,47 @@ input,button{font-family:inherit}
           </div>
         </sc-for>
         </div>
+      </sc-if>
+      <sc-if value="{{ isOStd }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ nearTop }}" as="it" hint-placeholder-count="4">
+            <div onClick="{{ it.onOpen }}" style="display:flex;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid {{ t.divider }}">
+              <div style="width:96px;height:96px;flex:none;border-radius:12px;overflow:hidden;background:{{ t.surf }};position:relative">
+                <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+                <span style="position:absolute;left:6px;top:6px;font-size:13px;font-weight:700;padding:2px 6px;border-radius:4px;background:{{ t.ink }};color:#fff">{{ it.distText }}</span>
+              </div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+                <div style="font-size:18px;font-weight:800;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
+                <div style="display:flex;align-items:center;gap:4px;font-size:13px"><span style="color:{{ t.star }}">★</span><b>{{ it.rating }}</b><span style="color:{{ t.sub }}">({{ it.reviews }})</span></div>
+                <div style="font-size:13px;color:{{ t.sub }}">{{ it.area }}</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap">
+                  <sc-for list="{{ it.tags }}" as="g" hint-placeholder-count="2"><span style="font-size:13px;font-weight:700;padding:2px 6px;border-radius:4px;background:{{ t.tagBg }};color:{{ t.ink }}">{{ g }}</span></sc-for>
+                </div>
+              </div>
+              <button onClick="{{ it.onCall }}" style="align-self:center;flex:none;width:46px;height:46px;border-radius:23px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">전화</button>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isBStd }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:0 16px 4px">
+          <sc-for list="{{ nearTop }}" as="it" hint-placeholder-count="3">
+            <div onClick="{{ it.onOpen }}" style="flex:none;width:220px;display:flex;flex-direction:column;gap:9px;cursor:pointer">
+              <div style="height:140px;border-radius:14px;overflow:hidden;background:{{ t.surf }};position:relative">
+                <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+                <span style="position:absolute;left:8px;top:8px;font-size:13px;font-weight:700;padding:3px 8px;border-radius:12px;background:#fff;color:{{ t.ink }}">{{ it.distText }}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                  <div style="font-size:18px;font-weight:800;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
+                  <div style="display:flex;gap:4px;font-size:13px;color:{{ t.ink }};white-space:nowrap"><span style="color:{{ t.star }}">★</span><b style="color:{{ t.title }}">{{ it.rating }}</b><span>리뷰 {{ it.reviews }}</span></div>
+                </div>
+                <button onClick="{{ it.onCall }}" style="flex:none;height:34px;padding:0 12px;border-radius:9px;border:1px solid {{ t.line }};background:{{ t.soft }};color:{{ t.deep }};font-size:13px;font-weight:700;cursor:pointer">전화</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
     </div>
   </div>
 </sc-if>
@@ -159,6 +298,7 @@ input,button{font-family:inherit}
       </sc-if>
     </div>
     <div style="display:flex;flex-direction:column;flex:1">
+      <sc-if value="{{ isLarge }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-direction:column;gap:18px;padding:6px 0 20px">
         <sc-for list="{{ rows }}" as="it" hint-placeholder-count="2">
           <div onClick="{{ it.onOpen }}" style="margin:0 16px;border-radius:18px;overflow:hidden;background:{{ t.card }};box-shadow:0 6px 18px {{ t.shadow }};cursor:pointer;display:flex;flex-direction:column">
@@ -184,6 +324,25 @@ input,button{font-family:inherit}
           </div>
         </sc-for>
         </div>
+      </sc-if>
+      <sc-if value="{{ notLarge }}" hint-placeholder-val="{{ true }}">
+      <sc-for list="{{ rows }}" as="it" hint-placeholder-count="5">
+        <div onClick="{{ it.onOpen }}" style="display:flex;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid {{ t.divider }}">
+          <div style="width:96px;height:96px;flex:none;border-radius:12px;overflow:hidden;background:{{ t.surf }}">
+            <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+            <div style="font-size:18px;font-weight:800;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
+            <div style="display:flex;align-items:center;gap:4px;font-size:13px;white-space:nowrap"><span style="color:{{ t.star }}">★</span><b>{{ it.rating }}</b><span style="color:{{ t.sub }}">({{ it.reviews }})</span></div>
+            <div style="font-size:13px;color:{{ t.sub }}">{{ it.area }}</div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap">
+              <sc-for list="{{ it.tags }}" as="g" hint-placeholder-count="2"><span style="font-size:13px;font-weight:700;padding:2px 6px;border-radius:4px;background:{{ t.tagBg }};color:{{ t.ink }}">{{ g }}</span></sc-for>
+            </div>
+          </div>
+          <button onClick="{{ it.onCall }}" style="align-self:center;flex:none;width:46px;height:46px;border-radius:23px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">전화</button>
+        </div>
+      </sc-for>
+      </sc-if>
       <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
         <div style="padding:70px 24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
           <div style="font-size:18px;font-weight:800">{{ emptyTitle }}</div>
@@ -350,7 +509,7 @@ input,button{font-family:inherit}
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;orange&quot;],&quot;default&quot;:&quot;orange&quot;,&quot;tsType&quot;:&quot;'orange'&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;orange&quot;,&quot;blue&quot;],&quot;default&quot;:&quot;orange&quot;,&quot;tsType&quot;:&quot;'orange'|'blue'&quot;},&quot;header&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;white&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;'color'|'white'&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;'default'|'large'&quot;}}">
 const U = id => `https://images.unsplash.com/photo-${id}?w=640&q=70&auto=format&fit=crop`;
 const IMG = {
   apt:'1502672260266-1c1ef2d93688', clean:'1581578731548-c64695cc6952', spray:'1527515637462-cff94eecc1ac', mop:'1563453392212-326f5e854473',
@@ -406,7 +565,11 @@ const ALL=[...NEAR,...BUILD];
 const RV=[['김**',5,'전화로 평수만 말씀드렸는데 바로 견적을 알려주셔서 편했어요. 창틀·베란다까지 꼼꼼했습니다.'],['이**',5,'다른 곳보다 견적이 합리적이었고 약속 시간도 정확했어요. 다음에도 부를게요.'],
   ['박**',4,'전체적으로 만족합니다. 부족한 부분은 연락드리니 재방문해서 처리해 주셨어요.'],['최**',5,'급하게 연락드렸는데 일정 맞춰주셔서 감사했습니다.'],['정**',4,'친절하시고 마무리 점검까지 같이 해주셔서 좋았어요.']];
 const THEMES={
-  orange:{main:'#EA3323',deep:'#B8231A',line:'#F8C6C1',soft:'#FDECEA',
+  orange:{main:'#FF6A13',deep:'#C94A00',line:'#FFD3B5',soft:'#FFF1E7',
+    point:'#2BB5A0',pointDeep:'#1A8A79',pointSoft:'#E8F7F4',pointLine:'#CBE9E3',
+    title:'#22262C',ink:'#3A3F47',sub:'#9AA0A7',tagBg:'#F1F2F4',surf:'#F4F5F7',divider:'#ECEEF1',
+    star:'#FFB020',bannerBg:'#B7E0F0',card:'#FFFFFF',cardLine:'#ECEEF1',shadow:'rgba(20,24,30,0.08)'},
+  blue:{main:'#2B6BF3',deep:'#1A4DC2',line:'#C7D8FD',soft:'#EDF3FF',
     point:'#2BB5A0',pointDeep:'#1A8A79',pointSoft:'#E8F7F4',pointLine:'#CBE9E3',
     title:'#22262C',ink:'#3A3F47',sub:'#9AA0A7',tagBg:'#F1F2F4',surf:'#F4F5F7',divider:'#ECEEF1',
     star:'#FFB020',bannerBg:'#B7E0F0',card:'#FFFFFF',cardLine:'#ECEEF1',shadow:'rgba(20,24,30,0.08)'}
@@ -436,6 +599,7 @@ class Component extends DCLogic {
       addr:b.kind==='near'?b.area:b.area, svc:b.tags.join(' · '), meta:b.kind==='near'?dt(b.dist):b.cat==='소파·매트리스·에어컨'?'홈케어':b.cat, distText:b.dist!=null?dt(b.dist):'', distShow:b.dist!=null?'inline-block':'none',
       onOpen:()=>this.open(b.key), onCall:e=>{e.stopPropagation();this.call(b.key);}};
   }
+  headMode(theme){return this.props.header||(theme==='orange'&&this.props.layout!=='large'?'white':'color');}
   renderVals(){
     const s=this.state, theme=this.props.theme||'orange', t=THEMES[theme]||THEMES.orange, r=s.region;
     const regionLabel=r.mode==='all'?'전국':r.si?`${r.sido.replace(/(특별자치도|도|시)$/,'')} ${r.si}`:r.sido;
@@ -464,13 +628,16 @@ class Component extends DCLogic {
     const tabKey=s.screen==='home'?'home':s.list;
     const isEmpty=rows.length===0;
     return {
-      t, scrollRef:this.scrollRef, onScroll:e=>{const v=e.currentTarget.scrollTop>4; if(v!==this.state.scrolled)this.setState({scrolled:v});}, headLine:s.scrolled?('1px solid '+t.divider):'1px solid transparent',
+      t, isO:theme==='orange', isB:theme!=='orange', scrollRef:this.scrollRef, onScroll:e=>{const v=e.currentTarget.scrollTop>4; if(v!==this.state.scrolled)this.setState({scrolled:v});}, headLine:s.scrolled?('1px solid '+t.divider):'1px solid transparent',
+      isLarge:this.props.layout==='large', isColorHead:this.headMode(theme)==='color', isWhiteHead:false, isOHead:this.headMode(theme)==='white', bannerFull:this.headMode(theme)==='white'&&this.props.layout==='large', bannerBoxed:this.headMode(theme)==='white'&&this.props.layout!=='large', notOHead:this.headMode(theme)!=='white', notLarge:this.props.layout!=='large',
+      isOStd:this.props.layout!=='large', notOStd:this.props.layout==='large', isBStd:false,
       catIcons:CATS.map(([l,k])=>({label:l,icon:({'입주청소':'home','이사청소':'mop','이사업체':'local_shipping','줄눈':'grid_on','소파·매트리스·에어컨':'weekend','탄성코트':'format_paint'})[l],img:U(IMG[k]),onClick:()=>this.nav({screen:'list',list:'cat',cat:l})})),
       imgErr:e=>{e.currentTarget.style.visibility='hidden';},
       isHome:s.screen==='home', isList:s.screen==='list', isDetail:s.screen==='detail', showTabs:s.screen!=='detail',
       bannerImg:'./assets/2148104609.jpg',
       query:s.query, onQuery:e=>this.setState({query:e.target.value}),
       onQueryKey:e=>{if(e.key==='Enter')this.doSearch();}, doSearch:()=>this.doSearch(),
+      catTiles:CATS.map(([l,k])=>({label:l,img:U(IMG[k]),count:BUILD.filter(b=>b.cat===l).length,onClick:()=>this.nav({screen:'list',list:'cat',cat:l})})),
       goCatAll:()=>this.nav({screen:'list',list:'cat'}),
       nearTop:NEAR.slice(0,4).map(b=>this.row(b)),
       goNear:()=>this.nav({screen:'list',list:'near'}), goHome:()=>this.nav({screen:'home'}), goBack:()=>this.nav({screen:s.back==='detail'?'home':s.back}),
@@ -496,8 +663,8 @@ class Component extends DCLogic {
       siList:[{label:`${s.tmpSido} 전체`,si:''},...subs.map(x=>({label:x,si:x}))].map(o=>{const on=curSi===(o.si||'_');return {label:o.label,n:cnt(s.tmpSido,o.si)||'',color:on?t.deep:'#17191c',weight:on?800:500,
         onClick:()=>this.setState({region:{mode:'sido',sido:s.tmpSido,si:o.si},sheet:null})};}),
       c:{name:cb.name,phone:cb.phone,tel:'tel:'+cb.phone.replace(/-/g,'')},
-      loginTitle:s.loginFor==="kakao"?"카카오톡 상담은 로그인이 필요해요":s.loginFor==="naver"?"네이버 톡톡 상담은 로그인이 필요해요":"간편하게 로그인하세요",
-      doLogin:()=>{const k=s.loginFor;this.setState({loggedIn:true,sheet:null},()=>{if(k)this.special(k,d0);else this.toast("로그인했어요");});}, loginLabel:s.loggedIn?"로그아웃":"로그인", loginFill:s.loggedIn?1:0, onLoginBtn:()=>{if(this.state.loggedIn){this.setState({loggedIn:false});this.toast("로그아웃했어요");}else this.setState({sheet:"login",loginFor:""});},
+      loginTitle:s.loginFor==='kakao'?'카카오톡 상담은 로그인이 필요해요':s.loginFor==='naver'?'네이버 톡톡 상담은 로그인이 필요해요':'간편하게 로그인하세요',
+      doLogin:()=>{const k=s.loginFor;this.setState({loggedIn:true,sheet:null},()=>{if(k)this.special(k,d0);else this.toast('로그인했어요');});}, loginLabel:s.loggedIn?'로그아웃':'로그인', loginFill:s.loggedIn?1:0, onLoginBtn:()=>{if(this.state.loggedIn){this.setState({loggedIn:false});this.toast('로그아웃했어요');}else this.setState({sheet:'login',loginFor:''});},
       hasToast:!!s.toast, toast:s.toast
     };
   }

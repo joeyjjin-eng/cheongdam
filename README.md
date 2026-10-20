@@ -1,23 +1,30 @@
 # 청담 모바일 시안
 
-주황(레드) 단일 시안. 블루 시안은 정리됐습니다.
+주황(A) · 블루(B) 두 시안. 화면·데이터·로직은 `CleanApp.dc.html` 하나를 공유하고, 레이아웃은 `dc-import` 속성으로 분기합니다.
 
-- index.html — 시안 진입점 (Live Server로 열면 이 파일이 뜹니다)
+- index.html — 시안 선택 화면
+- cheongdam-a.html — **A · 주황** (화이트 상단바 · 아이콘 카테고리 · 대형 포토카드)
+- cheongdam-b.html — **B · 블루** (컬러 상단바 · 사진 카테고리 · 가로형 리스트)
 - CleanApp.dc.html — 실제 화면·데이터·로직
 - cheongdam-color-system.md — 컬러 토큰 정의와 용도
 - assets/ — 로고 SVG, 배너 사진 / font/ — 로컬 프리텐다드
 - support.js — 런타임 (수정 불필요)
+
+## 시안 속성 (html 파일의 dc-import)
+- theme: orange / blue
+- layout: large(아이콘·대형카드) / 생략(사진·리스트)
+- header: white / color
 
 ## 실행
 파일을 직접 더블클릭하면 브라우저 보안 정책 때문에 CleanApp을 못 불러옵니다.
 VS Code 확장 **Live Server** 설치 → `index.html` 우클릭 → "Open with Live Server".
 
 ## 수정 위치 (CleanApp.dc.html)
-- 색상: `THEMES.orange` — 토큰 정의와 용도는 `cheongdam-color-system.md`
+- 색상: `THEMES` (orange / blue) — 토큰 정의와 용도는 `cheongdam-color-system.md`
 - 내 주변 청소업체 데이터: `NEAR`
 - 시공 카테고리 업체 데이터: `BUILD` (거리는 `DIST0`·`bdist()`로 시·도 기준 자동 계산)
 - 카테고리/아이콘: `CATS`, `catIcons`
-- 배너 사진: `bannerImg` / 카드 사진: `IMG` (Unsplash 샘플 → 실사진 경로로 교체)
+- 배너 사진: `bannerImg` / 카드 사진: `IMG`
 
 ## 타이포 규격
 폰트: 로컬 프리텐다드 (`font/pretendard.css`, `.woff` 9종).

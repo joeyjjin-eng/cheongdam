@@ -3,18 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>청담 — 청소에 진심을 담다</title>
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
+<title>청담 모바일 시안</title>
 <link rel="icon" href="./assets/logo_square.svg">
 <link rel="stylesheet" href="./font/pretendard.css">
-<style>html,body{margin:0;height:100%;background:#fff;font-family:Pretendard,-apple-system,sans-serif}a{color:#EA3323}a:hover{color:#B8231A}</style>
-<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><rect width="160" height="160" rx="32" fill="#EA3323"/><text x="80" y="104" text-anchor="middle" font-size="72" font-weight="800" fill="#fff" font-family="sans-serif">청</text></svg></template>
-</helmet>
-<dc-import name="CleanApp" theme="orange" hint-size="100%,100dvh"></dc-import>
-</x-dc>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:#F4F5F7;font-family:Pretendard,-apple-system,sans-serif;
+       display:flex;align-items:center;justify-content:center;gap:20px;padding:24px}
+  a.badge{width:88px;height:88px;border-radius:24px;display:flex;align-items:center;justify-content:center;
+          color:#fff;font-size:38px;font-weight:800;letter-spacing:0;line-height:1;text-decoration:none;
+          transition:transform .15s ease, box-shadow .15s ease}
+  a.badge:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,24,30,.16)}
+</style>
+</head>
+<body>
+  <a class="badge" href="./cheongdam-a.html" aria-label="A 주황 시안" title="A · 주황" style="background:#FF6A13">A</a>
+  <a class="badge" href="./cheongdam-b.html" aria-label="B 블루 시안" title="B · 블루" style="background:#2B6BF3">B</a>
 </body>
 </html>
