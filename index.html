@@ -2,34 +2,19 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>청담 모바일 시안</title>
-<style>
-  body{margin:0;background:#e8e9ec;font-family:Pretendard,-apple-system,sans-serif;
-       min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-  .wrap{width:100%;max-width:440px}
-  h1{font-size:20px;font-weight:800;margin:0 0 16px;color:#1a1a1a}
-  a.card{display:flex;align-items:center;gap:14px;padding:18px;margin-bottom:12px;
-         background:#fff;border-radius:14px;text-decoration:none;color:#1a1a1a;
-         box-shadow:0 1px 3px rgba(0,0,0,.08)}
-  a.card:hover{box-shadow:0 4px 12px rgba(0,0,0,.12)}
-  .badge{width:44px;height:44px;border-radius:10px;flex:0 0 auto;display:flex;
-         align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px}
-  .t{font-weight:700;font-size:15px}
-  .d{font-size:13px;color:#6b7280;margin-top:2px}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>청담 — 청소에 진심을 담다</title>
+<script src="./support.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <h1>청담 모바일 시안</h1>
-  <a class="card" href="./cheongdam-2a.html">
-    <span class="badge" style="background:#FF6A13">2a</span>
-    <span><span class="t">주황 시안</span><span class="d">기본 레이아웃</span></span>
-  </a>
-  <a class="card" href="./cheongdam-3b.html">
-    <span class="badge" style="background:#2B6BF3">3b</span>
-    <span><span class="t">블루 시안</span><span class="d">1열 대형카드 레이아웃</span></span>
-  </a>
-</div>
+<x-dc>
+<helmet>
+<link rel="icon" href="./assets/logo_square.svg">
+<link rel="stylesheet" href="./font/pretendard.css">
+<style>html,body{margin:0;height:100%;background:#fff;font-family:Pretendard,-apple-system,sans-serif}a{color:#EA3323}a:hover{color:#B8231A}</style>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><rect width="160" height="160" rx="32" fill="#EA3323"/><text x="80" y="104" text-anchor="middle" font-size="72" font-weight="800" fill="#fff" font-family="sans-serif">청</text></svg></template>
+</helmet>
+<dc-import name="CleanApp" theme="orange" hint-size="100%,100dvh"></dc-import>
+</x-dc>
 </body>
 </html>
