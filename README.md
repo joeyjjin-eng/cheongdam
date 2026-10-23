@@ -21,8 +21,11 @@ VS Code 확장 **Live Server** 설치 → `index.html` 우클릭 → "Open with 
 
 ## 수정 위치 (CleanApp.dc.html)
 - 색상: `THEMES` (orange / blue) — 토큰 정의와 용도는 `cheongdam-color-system.md`
-- 내 주변 청소업체 데이터: `NEAR`
+- 내 주변 추천업체 데이터: `NEAR`
 - 시공 카테고리 업체 데이터: `BUILD` (거리는 `DIST0`·`bdist()`로 시·도 기준 자동 계산)
+- 업체 샘플 사진은 기존 Unsplash 이미지를 유지하고, 부족한 카테고리만 인물이 없는 Pexels 라이선스 이미지로 보충
+- 대표 사진은 최근 5개 카드 안에서 겹치지 않도록 배정
+- 업체 목록은 추천업체를 처음 20곳 표시하고 스크롤 시 20곳씩 자동 추가 로딩; 최대 50곳 이후 일반업체는 별도 제목 없이 2열로 표시
 - 카테고리/아이콘: `CATS`, `catIcons`
 - 배너 사진: `bannerImg` / 카드 사진: `IMG`
 

@@ -19,6 +19,9 @@ body{margin:0;font-family:Pretendard,-apple-system,sans-serif;font-weight:500;li
 a{color:inherit;text-decoration:none}a:hover{opacity:.9}
 input,button{font-family:inherit}
 ::-webkit-scrollbar{display:none}
+.recommend-card{border:3px solid transparent;border-radius:14px;background:linear-gradient(var(--recommend-card-bg),var(--recommend-card-bg)) padding-box,linear-gradient(120deg,#FF6A13,#FFD166,#2BB5A0,#5B8CFF,#FF6A13) border-box;background-size:100% 100%,300% 300%;background-position:0 0,0% 50%;animation:recommend-border-flow 3s linear infinite}
+@keyframes recommend-border-flow{to{background-position:0 0,100% 50%}}
+@media(prefers-reduced-motion:reduce){.recommend-card{animation:none}}
 </style>
 </helmet>
 <div style="width:100%;max-width:430px;height:100vh;height:100dvh;margin:0 auto;background:#fff;position:relative;overflow:hidden;font-family:Pretendard,-apple-system,sans-serif;color:{{ t.title }}">
@@ -184,7 +187,7 @@ input,button{font-family:inherit}
     <div style="padding:28px 0 28px;display:flex;flex-direction:column;gap:14px;flex:1">
       <div style="padding:0 22px;display:flex;align-items:flex-end;justify-content:space-between">
         <div style="display:flex;flex-direction:column;gap:4px">
-          <div style="font-size:20px;font-weight:800;letter-spacing:0">내 주변 청소업체</div>
+          <div style="font-size:20px;font-weight:800;letter-spacing:0">내 주변 추천업체</div>
           <div style="font-size:13px;color:{{ t.sub }}">서울 강남구 역삼동 기준 · 추천순</div>
         </div>
         <button onClick="{{ goNear }}" style="border:0;background:none;font-size:13px;color:{{ t.sub }};cursor:pointer">전체보기 ›</button>
@@ -192,7 +195,7 @@ input,button{font-family:inherit}
       <sc-if value="{{ isLarge }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-direction:column;gap:18px">
         <sc-for list="{{ nearTop }}" as="it" hint-placeholder-count="2">
-          <div onClick="{{ it.onOpen }}" style="margin:0 16px;border-radius:18px;overflow:hidden;background:{{ t.card }};box-shadow:0 6px 18px {{ t.shadow }};cursor:pointer;display:flex;flex-direction:column">
+          <div class="recommend-card" onClick="{{ it.onOpen }}" style="--recommend-card-bg:{{ t.card }};margin:0 16px;border-radius:18px;overflow:hidden;box-shadow:0 6px 18px {{ t.shadow }};cursor:pointer;display:flex;flex-direction:column">
             <div style="position:relative;height:220px;background:{{ t.surf }}">
               <img src="{{ it.photo }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
               <span style="position:absolute;left:14px;top:14px;display:flex;align-items:center;gap:3px;font-size:13px;font-weight:700;padding:5px 10px 4px;border-radius:8px;background:{{ t.point }};color:#fff;box-shadow:0 2px 8px rgba(20,24,30,0.22)">추천</span>
@@ -220,7 +223,7 @@ input,button{font-family:inherit}
       <sc-if value="{{ isOStd }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;flex-direction:column">
           <sc-for list="{{ nearTop }}" as="it" hint-placeholder-count="4">
-            <div onClick="{{ it.onOpen }}" style="display:flex;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid {{ t.divider }}">
+            <div class="recommend-card" onClick="{{ it.onOpen }}" style="--recommend-card-bg:{{ t.card }};display:flex;gap:12px;margin:4px 10px;padding:12px 16px;border-radius:14px;cursor:pointer">
               <div style="width:96px;height:96px;flex:none;border-radius:12px;overflow:hidden;background:{{ t.surf }};position:relative">
                 <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
                 <span style="position:absolute;left:6px;top:6px;font-size:13px;font-weight:700;padding:2px 6px;border-radius:4px;background:{{ t.ink }};color:#fff">{{ it.distText }}</span>
@@ -241,7 +244,7 @@ input,button{font-family:inherit}
       <sc-if value="{{ isBStd }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:0 16px 4px">
           <sc-for list="{{ nearTop }}" as="it" hint-placeholder-count="3">
-            <div onClick="{{ it.onOpen }}" style="flex:none;width:220px;display:flex;flex-direction:column;gap:9px;cursor:pointer">
+            <div class="recommend-card" onClick="{{ it.onOpen }}" style="--recommend-card-bg:{{ t.card }};flex:none;width:220px;display:flex;flex-direction:column;gap:9px;cursor:pointer">
               <div style="height:140px;border-radius:14px;overflow:hidden;background:{{ t.surf }};position:relative">
                 <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
                 <span style="position:absolute;left:8px;top:8px;font-size:13px;font-weight:700;padding:3px 8px;border-radius:12px;background:#fff;color:{{ t.ink }}">{{ it.distText }}</span>
@@ -257,31 +260,11 @@ input,button{font-family:inherit}
           </sc-for>
         </div>
       </sc-if>
-      <div style="padding:26px 22px 0;display:flex;align-items:baseline;justify-content:space-between">
-        <div style="display:flex;align-items:baseline;gap:6px">
-          <span style="font-size:18px;font-weight:800;letter-spacing:0">주변 업체 더보기</span>
-          <span style="font-size:13px;font-weight:500;color:{{ t.sub }}">{{ freeCount }}곳</span>
+      <sc-if value="{{ hasHomeNearMore }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:0 16px">
+          <button onClick="{{ onHomeNearMore }}" style="width:100%;height:46px;border-radius:12px;border:1px solid {{ t.divider }};background:#fff;color:{{ t.ink }};font-size:15px;font-weight:700;cursor:pointer">더보기</button>
         </div>
-        <button onClick="{{ goNear }}" style="border:0;background:none;font-size:13px;color:{{ t.sub }};cursor:pointer">전체 ›</button>
-      </div>
-      <div style="padding:12px 22px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px">
-        <sc-for list="{{ freeTop }}" as="it" hint-placeholder-count="4">
-          <div onClick="{{ it.onOpen }}" style="cursor:pointer;display:flex;flex-direction:column;gap:8px;min-width:0">
-            <div style="position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:{{ t.surf }}">
-              <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
-              <span style="position:absolute;left:8px;top:8px;font-size:13px;font-weight:700;padding:3px 8px;border-radius:12px;background:rgba(23,31,38,0.6);color:#fff">{{ it.distText }}</span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
-              <div style="font-size:15px;font-weight:800;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
-              <div style="display:flex;align-items:center;gap:4px;font-size:13px;color:{{ t.ink }};white-space:nowrap"><span style="color:{{ t.star }}">★</span><span style="font-weight:700">{{ it.rating }}</span><span style="color:{{ t.sub }}">({{ it.reviews }})</span></div>
-              <div style="font-size:13px;color:{{ t.sub }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.addr }} · {{ it.catLabel }}</div>
-            </div>
-          </div>
-        </sc-for>
-      </div>
-      <div style="display:{{ moreShow }};padding:4px 22px 0">
-        <button onClick="{{ onMore }}" style="width:100%;height:46px;border-radius:12px;border:1px solid {{ t.divider }};background:#fff;color:{{ t.ink }};font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px">{{ moreLabel }}<span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-variation-settings:'FILL' 0,'wght' 600;font-feature-settings:'liga'">expand_more</span></button>
-      </div>
+      </sc-if>
     </div>
   </div>
 </sc-if>
@@ -330,10 +313,16 @@ input,button{font-family:inherit}
       </sc-if>
     </div>
     <div style="display:flex;flex-direction:column;flex:1">
+      <sc-if value="{{ isCatList }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:8px 22px;display:flex;align-items:baseline;gap:6px">
+          <span style="font-size:18px;font-weight:800;letter-spacing:0">추천업체</span>
+          <span style="font-size:13px;color:{{ t.sub }}">{{ rowPaidCount }}곳</span>
+        </div>
+      </sc-if>
       <sc-if value="{{ isLarge }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-direction:column;gap:18px;padding:6px 0 20px">
-        <sc-for list="{{ rows }}" as="it" hint-placeholder-count="2">
-          <div onClick="{{ it.onOpen }}" style="margin:0 16px;border-radius:18px;overflow:hidden;background:{{ t.card }};box-shadow:0 6px 18px {{ t.shadow }};cursor:pointer;display:flex;flex-direction:column">
+        <sc-for list="{{ rowsPaid }}" as="it" hint-placeholder-count="2">
+          <div class="recommend-card" onClick="{{ it.onOpen }}" style="--recommend-card-bg:{{ t.card }};margin:0 16px;border-radius:18px;overflow:hidden;box-shadow:0 6px 18px {{ t.shadow }};cursor:pointer;display:flex;flex-direction:column">
             <div style="position:relative;height:220px;background:{{ t.surf }}">
               <img src="{{ it.photo }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
               <div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(0deg,rgba(0,0,0,0.6),rgba(0,0,0,0))"></div>
@@ -358,11 +347,25 @@ input,button{font-family:inherit}
         </sc-for>
         </div>
       </sc-if>
-      <div style="display:{{ freeListShow }};flex-direction:column;padding:4px 22px 24px;gap:12px">
-        <div style="display:flex;align-items:baseline;gap:6px">
-          <span style="font-size:18px;font-weight:800;letter-spacing:0">일반 업체</span>
-          <span style="font-size:13px;font-weight:500;color:{{ t.sub }}">{{ rowFreeCount }}곳</span>
+      <sc-if value="{{ notLarge }}" hint-placeholder-val="{{ true }}">
+      <sc-for list="{{ rowsPaid }}" as="it" hint-placeholder-count="5">
+        <div class="recommend-card" onClick="{{ it.onOpen }}" style="--recommend-card-bg:{{ t.card }};display:flex;gap:12px;margin:4px 10px;padding:12px 16px;cursor:pointer">
+          <div style="width:96px;height:96px;flex:none;border-radius:12px;overflow:hidden;background:{{ t.surf }}">
+            <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+            <div style="font-size:18px;font-weight:800;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
+            <div style="display:flex;align-items:center;gap:4px;font-size:13px;white-space:nowrap"><span style="color:{{ t.star }}">★</span><b>{{ it.rating }}</b><span style="color:{{ t.sub }}">({{ it.reviews }})</span></div>
+            <div style="font-size:13px;color:{{ t.sub }}">{{ it.area }}</div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap">
+              <sc-for list="{{ it.tags }}" as="g" hint-placeholder-count="2"><span style="font-size:13px;font-weight:700;padding:2px 6px;border-radius:4px;background:{{ t.tagBg }};color:{{ t.ink }}">{{ g }}</span></sc-for>
+            </div>
+          </div>
+          <button onClick="{{ it.onCall }}" style="align-self:center;flex:none;width:46px;height:46px;border-radius:23px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">전화</button>
         </div>
+      </sc-for>
+      </sc-if>
+      <div style="display:{{ freeListShow }};flex-direction:column;padding:4px 22px 24px">
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px">
           <sc-for list="{{ rowsFree }}" as="it" hint-placeholder-count="4">
             <div onClick="{{ it.onOpen }}" style="cursor:pointer;display:flex;flex-direction:column;gap:8px;min-width:0">
@@ -379,24 +382,6 @@ input,button{font-family:inherit}
           </sc-for>
         </div>
       </div>
-      <sc-if value="{{ notLarge }}" hint-placeholder-val="{{ true }}">
-      <sc-for list="{{ rows }}" as="it" hint-placeholder-count="5">
-        <div onClick="{{ it.onOpen }}" style="display:flex;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid {{ t.divider }}">
-          <div style="width:96px;height:96px;flex:none;border-radius:12px;overflow:hidden;background:{{ t.surf }}">
-            <img src="{{ it.img }}" onError="{{ imgErr }}" style="width:100%;height:100%;object-fit:cover;display:block">
-          </div>
-          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:2px">
-            <div style="font-size:18px;font-weight:800;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
-            <div style="display:flex;align-items:center;gap:4px;font-size:13px;white-space:nowrap"><span style="color:{{ t.star }}">★</span><b>{{ it.rating }}</b><span style="color:{{ t.sub }}">({{ it.reviews }})</span></div>
-            <div style="font-size:13px;color:{{ t.sub }}">{{ it.area }}</div>
-            <div style="display:flex;gap:4px;flex-wrap:wrap">
-              <sc-for list="{{ it.tags }}" as="g" hint-placeholder-count="2"><span style="font-size:13px;font-weight:700;padding:2px 6px;border-radius:4px;background:{{ t.tagBg }};color:{{ t.ink }}">{{ g }}</span></sc-for>
-            </div>
-          </div>
-          <button onClick="{{ it.onCall }}" style="align-self:center;flex:none;width:46px;height:46px;border-radius:23px;border:0;background:{{ t.main }};color:#fff;font-size:13px;font-weight:700;cursor:pointer">전화</button>
-        </div>
-      </sc-for>
-      </sc-if>
       <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
         <div style="padding:70px 24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
           <div style="font-size:18px;font-weight:800">{{ emptyTitle }}</div>
@@ -442,6 +427,7 @@ input,button{font-family:inherit}
         <span style="color:{{ t.sub }}">영업시간</span><span>{{ d.hours }}</span>
         <span style="color:{{ t.sub }}">경력</span><span>{{ d.years }}</span>
         <span style="color:{{ t.sub }}">견적</span><span>전화 상담 무료 · 방문 견적 가능</span>
+        <span style="color:{{ t.sub }}">웹사이트</span><a href="{{ d.website }}" target="_blank" rel="noopener noreferrer" style="color:{{ t.deep }};text-decoration:underline;overflow-wrap:anywhere">{{ d.website }}</a>
       </div>
     </div>
     <div style="height:10px;background:{{ t.surf }}"></div>
@@ -564,12 +550,14 @@ input,button{font-family:inherit}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;orange&quot;,&quot;blue&quot;],&quot;default&quot;:&quot;orange&quot;,&quot;tsType&quot;:&quot;'orange'|'blue'&quot;},&quot;header&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;white&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;'color'|'white'&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;large&quot;,&quot;tsType&quot;:&quot;'default'|'large'&quot;}}">
-const U = id => `https://images.unsplash.com/photo-${id}?w=640&q=70&auto=format&fit=crop`;
+const U = id => typeof id === 'number'
+  ? `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=640`
+  : `https://images.unsplash.com/photo-${id}?w=640&q=70&auto=format&fit=crop`;
 const IMG = {
-  apt:'1502672260266-1c1ef2d93688', clean:'1581578731548-c64695cc6952', spray:'1527515637462-cff94eecc1ac', mop:'1563453392212-326f5e854473',
-  kitchen:'1556911220-bff31c812dba', bath:'1584622781564-1d987f7333c1', tile:'1620626011761-996317b8d101', sofa:'1555041469-a586c61ea9bc',
-  living:'1586023492125-27b2c045efd7', room:'1522708323590-d24dbb6b0267', modern:'1600607687939-ce8a6c25118c', interior:'1600210492486-724fe5c67fb0',
-  house:'1600585154340-be6161a56a0c', bright:'1600566753190-17f0baa2a6c3', vacuum:'1558618666-fcd25c85cd64'
+  apt:8146330, clean:8146330, spray:35419410, mop:3935327,
+  kitchen:6903205, bath:8583820, tile:13277522, sofa:4846097,
+  living:35419413, room:35419406, modern:12998745, interior:35493901,
+  house:35419428, bright:10847196, vacuum:4846459
 };
 const POOL = ['kitchen','bath','living','room','bright','interior','modern','spray','mop','vacuum'];
 const CATS = [['입주청소','apt'],['이사청소','clean'],['줄눈','tile'],['탄성코트','modern'],['소파·매트리스·에어컨','sofa'],['이사업체','house']];
@@ -580,13 +568,31 @@ const SIDO = [['전국',[]],['서울시',[]],['부산시',[]],['대구시',[]],[
   ['전라남도',['목포시','여수시','순천시','나주시','광양시']],['경상북도',['포항시','경주시','김천시','안동시','구미시','영주시','영천시','상주시','문경시','경산시']],
   ['경상남도',['창원시','진주시','통영시','사천시','김해시','밀양시','거제시','양산시']],['제주도',['제주시','서귀포시']]];
 // 카테고리별 사진 — 입주청소는 빈 집, 이사는 짐·박스, 줄눈은 타일, 탄성코트는 도장·베란다, 홈케어는 소파·침구.
-const PH={'입주청소':['1594286851359-8e5a51b36bba','1597293544475-16730f31a638','1675334419984-bc0b204c6083','1721395286594-8913b06056eb','1721395290083-895bf53d6178','1722650272764-08d92d193a9c','1722650362309-2f2fdffbfbf1','1757742690834-aa581b9f53b2'],'이사청소':['1527515637462-cff94eecc1ac','1527515673510-8aa78ce21f9b','1528740561666-dc2479dc08ab','1563453392212-326f5e854473','1585417238790-f6d290d6490c','1585421514284-efb74c2b69ba','1610389473058-fd68ad1d8bac','1617537230936-bb8c9327e84f','1628177142898-93e36e4e3a50','1632243575963-3143700087ed','1644169633221-4dbd3f247211','1647381518264-97ff1835026f','1647507146394-ea471abc800d','1580256081112-e49377338b7f','1646980241033-cd7abda2ee88','1713110824336-f78c320dcf8e','1737372805905-be0b91ec86fb'],'줄눈':['1566446896748-6075a87760c1','1571781418606-70265b9cce90','1575330719343-23de81f5b995','1580398562556-d33329a0f29b','1587527901949-ab0341697c1e','1590611329686-7494753d96e0','1602190169605-9179ffbf5ce0','1609280069904-ab36feb3f20c'],'탄성코트':['1675191863404-e1db618d6655','1688372198189-de6a51777a81','1688372199140-cade7ae820fe','1693585576674-2e1b7166f583','1716835519367-e666ee0a51d7'],'소파·매트리스·에어컨':['1493663284031-b7e3aefcae8e','1506377295352-e3154d43ea9e','1564078516393-cf04bd966897','1578500494198-246f612d3b3d','1583221742001-9ad88bf233ff','1589834390005-5d4fb9bf3d32','1590251024078-8a6d9f90b02d','1599696848652-f0ff23bc911f'],'이사업체':['1589803010842-41cdf85bf0f9','1591528287446-43c9c0e1075e','1591528287637-f3d5eaa83a3c','1600725935160-f67ee4f6084a','1624137527136-66e631bdaa0e','1663625318264-695d2d04f11a','1675116034300-c221c65051e8'],'청소':['1527515637462-cff94eecc1ac','1527515673510-8aa78ce21f9b','1528740561666-dc2479dc08ab','1563453392212-326f5e854473','1585417238790-f6d290d6490c','1585421514284-efb74c2b69ba','1610389473058-fd68ad1d8bac','1617537230936-bb8c9327e84f','1628177142898-93e36e4e3a50','1632243575963-3143700087ed','1644169633221-4dbd3f247211','1647381518264-97ff1835026f','1647507146394-ea471abc800d','1580256081112-e49377338b7f','1646980241033-cd7abda2ee88','1713110824336-f78c320dcf8e','1737372805905-be0b91ec86fb']};
+const PH={
+  '입주청소':['1594286851359-8e5a51b36bba','1597293544475-16730f31a638','1675334419984-bc0b204c6083','1721395286594-8913b06056eb','1721395290083-895bf53d6178','1722650272764-08d92d193a9c','1722650362309-2f2fdffbfbf1','1757742690834-aa581b9f53b2'],
+  '이사청소':['1527515637462-cff94eecc1ac','1527515673510-8aa78ce21f9b','1528740561666-dc2479dc08ab','1563453392212-326f5e854473','1585417238790-f6d290d6490c','1585421514284-efb74c2b69ba','1610389473058-fd68ad1d8bac','1617537230936-bb8c9327e84f','1628177142898-93e36e4e3a50','1632243575963-3143700087ed','1644169633221-4dbd3f247211','1647381518264-97ff1835026f','1647507146394-ea471abc800d','1580256081112-e49377338b7f','1646980241033-cd7abda2ee88','1713110824336-f78c320dcf8e','1737372805905-be0b91ec86fb'],
+  '줄눈':['1566446896748-6075a87760c1','1571781418606-70265b9cce90','1575330719343-23de81f5b995','1580398562556-d33329a0f29b','1587527901949-ab0341697c1e','1590611329686-7494753d96e0','1602190169605-9179ffbf5ce0','1609280069904-ab36feb3f20c'],
+  '탄성코트':['1675191863404-e1db618d6655','1688372198189-de6a51777a81','1688372199140-cade7ae820fe','1693585576674-2e1b7166f583','1716835519367-e666ee0a51d7'],
+  '소파·매트리스·에어컨':['1493663284031-b7e3aefcae8e','1506377295352-e3154d43ea9e','1564078516393-cf04bd966897','1578500494198-246f612d3b3d','1583221742001-9ad88bf233ff','1589834390005-5d4fb9bf3d32','1590251024078-8a6d9f90b02d','1599696848652-f0ff23bc911f'],
+  '이사업체':['1589803010842-41cdf85bf0f9','1591528287446-43c9c0e1075e','1591528287637-f3d5eaa83a3c','1600725935160-f67ee4f6084a','1624137527136-66e631bdaa0e','1663625318264-695d2d04f11a','1675116034300-c221c65051e8'],
+  '청소':['1527515637462-cff94eecc1ac','1527515673510-8aa78ce21f9b','1528740561666-dc2479dc08ab','1563453392212-326f5e854473','1585417238790-f6d290d6490c','1585421514284-efb74c2b69ba','1610389473058-fd68ad1d8bac','1617537230936-bb8c9327e84f','1628177142898-93e36e4e3a50','1632243575963-3143700087ed','1644169633221-4dbd3f247211','1647381518264-97ff1835026f','1647507146394-ea471abc800d','1580256081112-e49377338b7f','1646980241033-cd7abda2ee88','1713110824336-f78c320dcf8e','1737372805905-be0b91ec86fb']
+};
+const PEXELS_PHOTOS={
+  '입주청소':[8146330,3935327,35419410,35419413,35419406,35493901,35419428,10847196,35419418,19924546,37357034,35430100,20771872,7031622,35493888,3284980,18132311,20822566,19837082,7027842,21175828,3958956,7216016,6835181,30395628,8744792,12148640],
+  '이사청소':[8146330,3935327,35419410,35419413,35419406,35493901,35419428,10847196,35419418,19924546,37357034,35430100,20771872,7031622,35493888,3284980,18132311,20822566,19837082,7027842,21175828,3958956,7216016,6835181,30395628,8744792,12148640],
+  '줄눈':[9992549,13277522,14579397,8576733,30742339,6903205,20771873,8583820,6207366,11061219,32021732,9221288,11255233,5146920,38401704,8681005,39147393,10436518,10931569,38407089,12494703,33484643,26083350,28407169],
+  '탄성코트':[7941435,37486125,12998745,6910288,1687016,30783645,18574855,20259698,30397833,13277522,9348495,11159844,16783536,6347785,11814046,18969888,39498207,27205769,16512513,18743907,17976227,36346027,12956025,2455119,216668],
+  '소파·매트리스·에어컨':[4846097,3965534,19368914,3328224,4846459,5824577,17586950,32451098,6958126,9290601,11295890,6970059,8135275,35373121,4915583,19836798,4177668,6969781,4916510,8135295,7195558,1362385],
+  '이사업체':[4554242,4554249,7203775,4568693,4568710,4553261,7464509,19705900,8146330,3935327,35419410,35419413,35419406,35493901,35419428,10847196,35419418,19924546,37357034,35430100,20771872,7031622,35493888,3284980,18132311,20822566,19837082,7027842],
+  '청소':[8146330,3935327,35419410,35419413,35419406,35493901,35419428,10847196,35419418,19924546,37357034,35430100,20771872,7031622,35493888,3284980,18132311,20822566,19837082,7027842,21175828,3958956,7216016,6835181,30395628,8744792,12148640]
+};
+Object.keys(PEXELS_PHOTOS).forEach(cat=>PH[cat].push(...PEXELS_PHOTOS[cat]));
 const PAID={'입주청소':4,'이사청소':2,'줄눈':3,'탄성코트':1,'소파·매트리스·에어컨':2,'이사업체':5};
 const CI={};
 const ph=(c,i)=>{const a=PH[c]||PH['청소'];return a[i%a.length];};
 const mk = (kind,i,o) => ({kind, key:kind+i, id:i, likes:30+(i*41)%170, hours: i%2?'매일 08:00 – 20:00':'월–토 09:00 – 19:00',
-  img:U(ph(o.phCat,o.pi)), photos:[0,1,2,3].map(k=>U(ph(o.phCat,o.pi+k))), ...o});
-// 내 주변 청소업체 (위치 기반, 별도 관리)
+  img:U(ph(o.phCat,o.pi)), photos:[0,1,2,3].map(k=>U(ph(o.phCat,o.pi+k))), website:o.website||'https://example.com', ...o});
+// 내 주변 추천업체 (위치 기반, 별도 관리)
 const NEAR = [
   ['반짝홈클리닝','서울 강남구 역삼동',0.4,4.9,312,['거주청소','입주청소'],'8년',1,1,'0507-1384-2207','kitchen'],
   ['클린메이트','서울 강남구 삼성동',0.9,4.8,208,['정기청소','거주청소'],'5년',1,0,'0507-1422-0918','living'],
@@ -647,6 +653,52 @@ const BUILD = [
   ['강릉 이사모아','강원 강릉시','강원도','강릉시','이사업체',4.8,38,'interior']
 ].map((r,i)=>mk('build',i,{pi:(CI[r[4]]=(CI[r[4]]||0)+1)-1+(r[4]==='이사청소'?9:0),phCat:r[4],paid:(CI[r[4]]-1)<(PAID[r[4]]||2),name:r[0],area:r[1],dist:bdist(r[2],i),sido:r[2],si:r[3],cat:r[4],tags:[r[4]],rating:r[5],reviews:r[6],ph:r[7],years:`${3+(i*3)%9}년`,
   talk:i%3!==1,kakao:i%4!==2,phone:`0507-1${(300+i*37)%1000}-${String(1000+i*613).slice(-4)}`}));
+const SAMPLE_LOCATIONS=[['서울 강남구 역삼동','서울시',''],['서울 마포구 합정동','서울시',''],['경기 수원시 영통구','경기도','수원시'],['경기 성남시 분당구','경기도','성남시'],['인천 연수구 송도동','인천시',''],['부산 해운대구 우동','부산시',''],['대구 수성구 범어동','대구시',''],['대전 유성구 봉명동','대전시',''],['광주 서구 치평동','광주시',''],['강원 춘천시 퇴계동','강원도','춘천시'],['충북 청주시 흥덕구','충청북도','청주시'],['전북 전주시 완산구','전라북도','전주시'],['경남 창원시 성산구','경상남도','창원시'],['제주 제주시 노형동','제주도','제주시']];
+const SAMPLE_NAME_PREFIXES=['맑은','정성가득','산뜻한','꼼꼼한','믿음직한','편안한','환한','다정한','기분좋은','반짝이는','언제나','우리동네','따뜻한','섬세한','실속있는','정직한','청결한','상쾌한','든든한','깔끔한'];
+const SAMPLE_NAME_SUFFIXES=['공간','손길','생활'];
+let nextBuildId=BUILD.length;
+CATS.forEach(([cat],catIndex)=>{
+  const existing=BUILD.filter(b=>b.cat===cat);
+  const missingPaid=Math.max(0,50-existing.filter(b=>b.paid).length);
+  const missingFree=Math.max(0,10-existing.filter(b=>!b.paid).length);
+  for(let i=0;i<missingPaid+missingFree;i++){
+    const seed=(catIndex*31+i*17+11)%997;
+    const [area,sido,si]=SAMPLE_LOCATIONS[seed%SAMPLE_LOCATIONS.length];
+    const id=nextBuildId++;
+    const isPaid=i<missingPaid;
+    BUILD.push(mk('build',id,{pi:seed%PH[cat].length,phCat:cat,paid:isPaid,
+      name:`${SAMPLE_NAME_PREFIXES[i%SAMPLE_NAME_PREFIXES.length]} ${SAMPLE_NAME_SUFFIXES[Math.floor(i/SAMPLE_NAME_PREFIXES.length)]} ${cat}`,
+      area,dist:bdist(sido,id),sido,si,cat,tags:[cat],
+      rating:+(4.4+(seed%7)*0.1).toFixed(1),reviews:18+(seed*13)%280,
+      ph:ph(cat,seed%PH[cat].length),years:`${2+(seed%10)}년`,
+      talk:seed%3!==1,kakao:seed%4!==2,phone:`0507-1${String((300+id*37)%1000).padStart(3,'0')}-${String(1000+id*613).slice(-4)}`}));
+  }
+});
+const samplePhoto=(id)=>U(id);
+const SAMPLE_ROOM_PHOTOS=PH['입주청소'];
+const SAMPLE_TILE_PHOTOS=PH['줄눈'];
+const SAMPLE_WALL_PHOTOS=PH['탄성코트'];
+const SAMPLE_BOX_PHOTOS=PH['이사업체'];
+const SAMPLE_SOFA_PHOTOS=PH['소파·매트리스·에어컨'];
+const SAMPLE_PHOTOS_BY_CAT={
+  입주청소:SAMPLE_ROOM_PHOTOS,
+  이사청소:SAMPLE_ROOM_PHOTOS,
+  줄눈:SAMPLE_TILE_PHOTOS,
+  탄성코트:SAMPLE_WALL_PHOTOS,
+  '소파·매트리스·에어컨':SAMPLE_SOFA_PHOTOS,
+  이사업체:SAMPLE_BOX_PHOTOS
+};
+CATS.forEach(([cat])=>{
+  BUILD.filter(business=>business.cat===cat).forEach((business,categoryIndex)=>{
+    const photos=SAMPLE_PHOTOS_BY_CAT[cat];
+    business.photos=Array.from({length:4},(_,index)=>samplePhoto(photos[(categoryIndex+index)%photos.length]));
+    business.img=business.photos[0];
+  });
+});
+NEAR.forEach((business,index)=>{
+  business.photos=Array.from({length:4},(_,photoIndex)=>samplePhoto(SAMPLE_ROOM_PHOTOS[(index+photoIndex)%SAMPLE_ROOM_PHOTOS.length]));
+  business.img=business.photos[0];
+});
 const ALL=[...NEAR,...BUILD];
 const RV=[['김**',5,'전화로 평수만 말씀드렸는데 바로 견적을 알려주셔서 편했어요. 창틀·베란다까지 꼼꼼했습니다.'],['이**',5,'다른 곳보다 견적이 합리적이었고 약속 시간도 정확했어요. 다음에도 부를게요.'],
   ['박**',4,'전체적으로 만족합니다. 부족한 부분은 연락드리니 재방문해서 처리해 주셨어요.'],['최**',5,'급하게 연락드렸는데 일정 맞춰주셔서 감사했습니다.'],['정**',4,'친절하시고 마무리 점검까지 같이 해주셔서 좋았어요.']];
@@ -664,12 +716,12 @@ const stars=r=>'★★★★★'.slice(0,Math.round(r))+'☆☆☆☆☆'.slice(
 const dt=d=>d<1?`${Math.round(d*1000)}m`:`${d.toFixed(1)}km`;
 
 class Component extends DCLogic {
-  state={scrolled:false,limit:12,screen:'home',list:'cat',back:'home',sheet:null,region:{mode:'all'},tmpSido:'서울시',cat:'입주청소',sort:'rec',radius:0,sel:'near0',callKey:'near0',likes:[],loggedIn:false,loginFor:'naver',toast:'',gi:0,query:'',q:''};
+  state={scrolled:false,limit:20,homeNearLimit:5,screen:'home',list:'cat',back:'home',sheet:null,region:{mode:'all'},tmpSido:'서울시',cat:'입주청소',sort:'rec',radius:0,sel:'near0',callKey:'near0',likes:[],loggedIn:false,loginFor:'naver',toast:'',gi:0,query:'',q:''};
   scrollRef=React.createRef();
   storeKey(){return 'cleantong_likes_'+(this.props.theme||'orange');}
   componentDidMount(){try{this.setState({likes:JSON.parse(localStorage.getItem(this.storeKey())||'[]')});}catch(e){}}
   top(){const el=this.scrollRef.current; if(el) el.scrollTop=0;}
-  nav(o){this.setState({...o,limit:12},()=>this.top());}
+  nav(o){this.setState({...o,limit:o.list==='cat'?20:12},()=>this.top());}
   toast(t){clearTimeout(this._t);this.setState({toast:t});this._t=setTimeout(()=>this.setState({toast:''}),2200);}
   open(key){this.nav({back:this.state.screen,screen:'detail',sel:key,gi:0});}
   call(key){this.setState({sheet:'call',callKey:key});}
@@ -678,12 +730,21 @@ class Component extends DCLogic {
     if(!this.state.loggedIn){this.setState({sheet:'login',loginFor:kind});return;}
     this.toast(kind==='naver'?`네이버 톡톡으로 ${b.name}에 연결합니다`:`카카오톡 채널로 ${b.name}에 연결합니다`);
   }
-  row(b){
+  row(b,photo){
     const ci=(this.state.cardIdx||{})[b.key]||0, n=b.photos.length;
     const step=(e,dir)=>{e.stopPropagation();this.setState(s=>({cardIdx:{...(s.cardIdx||{}),[b.key]:(ci+dir+n)%n}}));};
-    return {...b, photo:b.photos[ci], onPrev:e=>step(e,-1), onNext:e=>step(e,1), catLabel:b.kind==='near'?b.tags[0]:b.cat,
+    return {...b, img:photo||b.img, photo:photo||b.photos[ci], onPrev:e=>step(e,-1), onNext:e=>step(e,1), catLabel:b.kind==='near'?b.tags[0]:b.cat,
       addr:b.kind==='near'?b.area:b.area, svc:b.tags.join(' · '), meta:b.kind==='near'?dt(b.dist):b.cat==='소파·매트리스·에어컨'?'홈케어':b.cat, distText:b.dist!=null?dt(b.dist):'', distShow:b.dist!=null?'inline-block':'none',
       onOpen:()=>this.open(b.key), onCall:e=>{e.stopPropagation();this.call(b.key);}};
+  }
+  uniquePhoto(b,history){
+    const photos=b.kind==='build'?SAMPLE_PHOTOS_BY_CAT[b.cat]:SAMPLE_ROOM_PHOTOS;
+    const start=Math.abs(b.id)%photos.length;
+    const photoId=Array.from({length:photos.length},(_,index)=>photos[(start+index)%photos.length]).find(id=>!history.includes(id));
+    if(photoId===undefined)throw new Error(`At least five unique sample photos are required for ${b.cat||'cleaning'}`);
+    history.push(photoId);
+    if(history.length>4)history.shift();
+    return samplePhoto(photoId);
   }
   headMode(theme){return this.props.header||(theme==='orange'&&this.props.layout!=='large'?'white':'color');}
   renderVals(){
@@ -696,7 +757,7 @@ class Component extends DCLogic {
       listTitle='시공 찾기'; showSort=true; emptyTitle=`${regionLabel}에 등록된 ${s.cat} 업체가 없어요`; emptyDesc='지역을 넓혀 전국으로 찾아보세요';
     } else if(s.list==='near'){
       rows=ALL.filter(b=>!s.radius||b.dist<=s.radius).sort((a,b)=>a.dist-b.dist);
-      listTitle='내 주변 청소업체'; emptyTitle=s.radius?`${s.radius}km 안에 업체가 없어요`:'주변에 업체가 없어요'; emptyDesc='반경을 넓혀 보세요';
+      listTitle='내 주변 추천업체'; emptyTitle=s.radius?`${s.radius}km 안에 업체가 없어요`:'주변에 업체가 없어요'; emptyDesc='반경을 넓혀 보세요';
     } else if(s.list==='liked'){
       rows=ALL.filter(b=>s.likes.includes(b.key)); listTitle='찜한 업체'; emptyTitle='아직 찜한 업체가 없어요'; emptyDesc='업체 상세에서 하트를 눌러 저장하세요 (로그인 불필요)';
     } else {
@@ -714,30 +775,49 @@ class Component extends DCLogic {
     const tabKey=s.screen==='home'?'home':s.list;
     const isEmpty=rows.length===0;
     const nearAll=ALL.slice().sort((a,b)=>a.dist-b.dist);
-    const paidAll=nearAll.filter(b=>b.paid), freeAll=nearAll.filter(b=>!b.paid);
+    const paidAll=nearAll.filter(b=>b.paid);
+    const homeNearAll=[...paidAll,...nearAll.filter(b=>!b.paid)];
+    const homeNearLimit=Math.min(s.homeNearLimit,50,homeNearAll.length);
     const rowsPaid=rows.filter(b=>b.paid), rowsFree=rows.filter(b=>!b.paid);
-    this._rowCount=s.screen==="home"?freeAll.length:Math.max(rowsPaid.length,rowsFree.length);
+    const photoHistory=[];
+    const visiblePaid=(s.list==='cat'?rowsPaid:rows).slice(0,s.list==='cat'?Math.min(s.limit,50):s.limit)
+      .map(b=>this.row(b,this.uniquePhoto(b,photoHistory)));
+    const showFree=s.list==='cat'&&rowsFree.length>0&&s.limit>=Math.min(50,rowsPaid.length);
+    const visibleFree=(showFree?rowsFree.slice(0,10):[])
+      .map(b=>this.row(b,this.uniquePhoto(b,photoHistory)));
+    this._rowCount=s.list==='cat'?Math.min(50,rowsPaid.length):rows.length;
     return {
-      t, isO:theme==='orange', isB:theme!=='orange', scrollRef:this.scrollRef, onScroll:e=>{const el=e.currentTarget, v=el.scrollTop>4, st={}; if(v!==this.state.scrolled)st.scrolled=v; if(this.state.screen!=='home'&&el.scrollHeight-el.scrollTop-el.clientHeight<320&&this.state.limit<(this._rowCount||0))st.limit=this.state.limit+12; if(Object.keys(st).length)this.setState(st);}, headLine:s.scrolled?('1px solid '+t.divider):'1px solid transparent',
+      t, isO:theme==='orange', isB:theme!=='orange', scrollRef:this.scrollRef, onScroll:e=>{
+        const el=e.currentTarget, scrolled=el.scrollTop>4;
+        const nearBottom=el.scrollHeight-el.scrollTop-el.clientHeight<320;
+        const maxRows=this._rowCount||0;
+        const step=s.list==='cat'?20:12;
+        if(s.screen!=='home'&&nearBottom&&s.limit<maxRows&&!this._loadingMore){
+          this._loadingMore=true;
+          this.setState({limit:Math.min(maxRows,s.limit+step),scrolled},()=>{this._loadingMore=false;});
+        }else if(scrolled!==this.state.scrolled)this.setState({scrolled});
+      }, headLine:s.scrolled?('1px solid '+t.divider):'1px solid transparent',
       isLarge:this.props.layout==='large', isColorHead:this.headMode(theme)==='color', isWhiteHead:false, isOHead:this.headMode(theme)==='white', bannerFull:this.headMode(theme)==='white'&&this.props.layout==='large', bannerBoxed:this.headMode(theme)==='white'&&this.props.layout!=='large', notOHead:this.headMode(theme)!=='white', notLarge:this.props.layout!=='large',
       isOStd:this.props.layout!=='large', notOStd:this.props.layout==='large', isBStd:false,
       catIcons:CATS.map(([l,k])=>({label:l,icon:({'입주청소':'home','이사청소':'mop','이사업체':'local_shipping','줄눈':'grid_on','소파·매트리스·에어컨':'weekend','탄성코트':'format_paint'})[l],img:U(IMG[k]),onClick:()=>this.nav({screen:'list',list:'cat',cat:l})})),
       imgErr:e=>{e.currentTarget.style.visibility='hidden';},
       isHome:s.screen==='home', isList:s.screen==='list', isDetail:s.screen==='detail', showTabs:s.screen!=='detail',
-      bannerImg:'./assets/2148104609.jpg',
+      bannerImg:samplePhoto(8146330),
       query:s.query, onQuery:e=>this.setState({query:e.target.value}),
       onQueryKey:e=>{if(e.key==='Enter')this.doSearch();}, doSearch:()=>this.doSearch(),
       catTiles:CATS.map(([l,k])=>({label:l,img:U(IMG[k]),count:BUILD.filter(b=>b.cat===l).length,onClick:()=>this.nav({screen:'list',list:'cat',cat:l})})),
       goCatAll:()=>this.nav({screen:'list',list:'cat'}),
-      nearTop:paidAll.slice(0,5).map(b=>this.row(b)), freeTop:freeAll.slice(0,s.limit).map(b=>this.row(b)), freeCount:freeAll.length, moreShow:s.limit<freeAll.length?'block':'none', moreLabel:`더보기 ${Math.min(s.limit,freeAll.length)}/${freeAll.length}`, onMore:()=>this.setState({limit:this.state.limit+12}),
+      nearTop:(()=>{const history=[];return homeNearAll.slice(0,homeNearLimit).map(b=>this.row(b,this.uniquePhoto(b,history)));})(),
+      hasHomeNearMore:homeNearLimit<Math.min(50,homeNearAll.length),
+      onHomeNearMore:()=>this.setState(s=>({homeNearLimit:Math.min(50,s.homeNearLimit+10)})),
       goNear:()=>this.nav({screen:'list',list:'near'}), goHome:()=>this.nav({screen:'home'}), goBack:()=>this.nav({screen:s.back==='detail'?'home':s.back}),
       listTitle, isCatList:s.list==='cat', isNearList:s.list==='near', showSort, regionLabel,
       openRegion:()=>this.setState({sheet:'region',tmpSido:r.mode==='sido'?r.sido:s.tmpSido}),
-      catTabs:CATS.map(([l])=>{const on=l===s.cat;return {label:l,weight:on?800:500,color:on?'#17191c':'#8a9099',bar:on?t.main:'transparent',onClick:()=>this.setState({cat:l})};}),
+      catTabs:CATS.map(([l])=>{const on=l===s.cat;return {label:l,weight:on?800:500,color:on?'#17191c':'#8a9099',bar:on?t.main:'transparent',onClick:()=>this.setState({cat:l,limit:20},()=>this.top())};}),
       radii:[0,3,5,10].map(k=>{const on=k===s.radius;return {label:k?`${k}km`:'전체',bg:on?t.main:'#fff',color:on?'#fff':'#3b4047',border:on?t.main:'#e1e4e8',onClick:()=>this.setState({radius:k})};}),
       relocate:()=>this.toast('현재 위치를 다시 확인했어요'),
-      sorts:[['rec','추천순'],['rating','별점순'],['reviews','리뷰순']].map(([k,l])=>({label:l,weight:k===s.sort?800:500,color:k===s.sort?'#17191c':'#9aa0a7',onClick:()=>this.setState({sort:k})})),
-      rows:rowsPaid.slice(0,s.limit).map(b=>this.row(b)), rowsFree:rowsFree.slice(0,s.limit).map(b=>this.row(b)), rowFreeCount:rowsFree.length, freeListShow:rowsFree.length?'flex':'none', rowCount:rows.length, isEmpty, emptyTitle, emptyDesc,
+      sorts:[['rec','추천순']].map(([k,l])=>({label:l,weight:k===s.sort?800:500,color:k===s.sort?'#17191c':'#9aa0a7',onClick:()=>this.setState({sort:k})})),
+      rows:rows.slice(0,s.limit).map(b=>this.row(b)), rowsPaid:visiblePaid, rowsFree:visibleFree, rowPaidCount:rowsPaid.length,rowFreeCount:rowsFree.length, freeListShow:showFree?'flex':'none', rowCount:rows.length, isEmpty, emptyTitle, emptyDesc,
       tabs:[['home','홈','50%',()=>this.nav({screen:'home'})],['cat','시공찾기','6px',()=>this.nav({screen:'list',list:'cat'})],['near','내주변','50%',()=>this.nav({screen:'list',list:'near'})],['liked','찜','6px',()=>this.nav({screen:'list',list:'liked'})]]
         .map(([k,l,rad,f])=>{const on=tabKey===k;return {label:l,onClick:f,radius:rad,color:on?t.main:'#a0a6ad',fill:on?t.soft:'transparent'};}),
       d, galleryText:`${s.gi+1} / ${d.photos.length}`,
@@ -749,9 +829,9 @@ class Component extends DCLogic {
       sheetOpen:!!s.sheet, isRegion:s.sheet==='region', isCall:s.sheet==='call', isLogin:s.sheet==='login',
       closeSheet:()=>this.setState({sheet:null}),
       sidoList:SIDO.map(([n])=>{const on=n===s.tmpSido;return {label:n,bg:on?'#fff':'transparent',color:on?t.deep:'#3b4047',weight:on?800:500,
-        onClick:()=>{if(n==='전국')this.setState({region:{mode:'all'},sheet:null});else this.setState({tmpSido:n});}};}),
+        onClick:()=>{if(n==='전국')this.setState({region:{mode:'all'},sheet:null,limit:20});else this.setState({tmpSido:n});}};}),
       siList:[{label:`${s.tmpSido} 전체`,si:''},...subs.map(x=>({label:x,si:x}))].map(o=>{const on=curSi===(o.si||'_');return {label:o.label,n:cnt(s.tmpSido,o.si)||'',color:on?t.deep:'#17191c',weight:on?800:500,
-        onClick:()=>this.setState({region:{mode:'sido',sido:s.tmpSido,si:o.si},sheet:null})};}),
+        onClick:()=>this.setState({region:{mode:'sido',sido:s.tmpSido,si:o.si},sheet:null,limit:20})};}),
       c:{name:cb.name,phone:cb.phone,tel:'tel:'+cb.phone.replace(/-/g,'')},
       loginTitle:s.loginFor==='kakao'?'카카오톡 상담은 로그인이 필요해요':s.loginFor==='naver'?'네이버 톡톡 상담은 로그인이 필요해요':'간편하게 로그인하세요',
       doLogin:()=>{const k=s.loginFor;this.setState({loggedIn:true,sheet:null},()=>{if(k)this.special(k,d0);else this.toast('로그인했어요');});}, loginLabel:s.loggedIn?'로그아웃':'로그인', loginFill:s.loggedIn?1:0, onLoginBtn:()=>{if(this.state.loggedIn){this.setState({loggedIn:false});this.toast('로그아웃했어요');}else this.setState({sheet:'login',loginFor:''});},
