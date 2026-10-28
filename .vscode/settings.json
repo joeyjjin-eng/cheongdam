@@ -1,0 +1,7 @@
+{
+  // 이 프로젝트의 HTML은 x-dc 런타임 템플릿이라 인라인 style 안에 {{ t.ink }} 같은
+  // 표현식이 들어간다. VS Code의 CSS 검사기는 그걸 CSS로 파싱해 매 줄마다
+  // "식별자 필요" / "} 필요" 오류를 쏟아내는데, 전부 오탐이라 해당 검사만 끈다.
+  "html.validate.styles": false,
+  "css.lint.emptyRules": "ignore"
+}
