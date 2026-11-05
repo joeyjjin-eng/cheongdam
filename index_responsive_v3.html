@@ -462,7 +462,7 @@ input,button{font-family:inherit}
         <span style="width:18px;height:18px;border-radius:9px;background:#fee500"></span><span style="font-size:clamp(12px,3.33vw,13px);font-weight:700;color:{{ t.ink }}">카톡</span>
       </button>
       <button onClick="{{ onCallDetail }}" style="flex:1;height:54px;border-radius:12px;border:0;background:{{ t.main }};color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px">
-        <span style="font-size:clamp(12px,3.85vw,15px);font-weight:700">전화로 견적 받기</span><span style="font-size:clamp(12px,3.33vw,13px);font-weight:500">로그인 없이 바로 연결</span>
+        <span style="font-size:clamp(12px,3.85vw,15px);font-weight:700">무료 견적 상담</span>
       </button>
     </div>
   </div>
@@ -527,7 +527,8 @@ input,button{font-family:inherit}
           <div>· 로그인 없이 바로 연결됩니다.</div>
         </div>
         <div style="display:flex;gap:8px">
-          <button onClick="{{ closeSheet }}" style="flex:none;width:96px;height:54px;border-radius:12px;border:1px solid {{ t.divider }};background:#fff;font-size:clamp(12px,3.85vw,15px);font-weight:700;cursor:pointer;color:{{ t.ink }}">취소</button>
+          <button onClick="{{ closeSheet }}" style="flex:none;width:72px;height:54px;border-radius:12px;border:1px solid {{ t.divider }};background:#fff;font-size:clamp(12px,3.85vw,15px);font-weight:700;cursor:pointer;color:{{ t.ink }}">취소</button>
+          <a href="{{ c.sms }}" onClick="{{ closeSheet }}" style="flex:1;min-width:0;height:54px;border-radius:12px;border:1px solid {{ t.line }};background:{{ t.soft }};color:{{ t.deep }};font-size:clamp(12px,3.85vw,15px);font-weight:700;white-space:nowrap;display:flex;align-items:center;justify-content:center">문자 상담하기</a>
           <a href="{{ c.tel }}" onClick="{{ closeSheet }}" style="flex:1;height:54px;border-radius:12px;background:{{ t.main }};color:#fff;font-size:clamp(12px,3.85vw,15px);font-weight:700;display:flex;align-items:center;justify-content:center">전화 걸기</a>
         </div>
       </div>
@@ -857,7 +858,7 @@ class Component extends DCLogic {
         onClick:()=>{if(n==='전국')this.setState({region:{mode:'all'},sheet:null,limit:20});else this.setState({tmpSido:n});}};}),
       siList:[{label:`${s.tmpSido} 전체`,si:''},...subs.map(x=>({label:x,si:x}))].map(o=>{const on=curSi===(o.si||'_');return {label:o.label,n:cnt(s.tmpSido,o.si)||'',color:on?t.deep:'#17191c',weight:on?800:500,
         onClick:()=>this.setState({region:{mode:'sido',sido:s.tmpSido,si:o.si},sheet:null,limit:20})};}),
-      c:{name:cb.name,phone:cb.phone,tel:'tel:'+cb.phone.replace(/-/g,'')},
+      c:{name:cb.name,phone:cb.phone,tel:'tel:'+cb.phone.replace(/-/g,''),sms:'sms:'+cb.phone.replace(/-/g,'')},
       loginTitle:s.loginFor==='kakao'?'카카오톡 상담은 로그인이 필요해요':s.loginFor==='naver'?'네이버 톡톡 상담은 로그인이 필요해요':'간편하게 로그인하세요',
       doLogin:()=>{const k=s.loginFor;this.setState({loggedIn:true,sheet:null},()=>{if(k)this.special(k,d0);else this.toast('로그인했어요');});}, loginLabel:s.loggedIn?'로그아웃':'로그인', loginFill:s.loggedIn?1:0, onLoginBtn:()=>{if(this.state.loggedIn){this.setState({loggedIn:false});this.toast('로그아웃했어요');}else this.setState({sheet:'login',loginFor:''});},
       hasToast:!!s.toast, toast:s.toast
