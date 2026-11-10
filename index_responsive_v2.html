@@ -302,7 +302,7 @@ input,button{font-family:inherit}
   <div data-screen-label="리스트" style="display:flex;flex-direction:column;flex:1">
     <div style="position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid {{ t.divider }};display:flex;flex-direction:column;padding-top:6px">
       <div style="height:56px;display:flex;align-items:center;gap:2px;padding:0 22px 0 12px">
-        <button onClick="{{ goHome }}" style="flex:none;width:40px;height:40px;margin-left:-8px;padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:{{ t.title }}">
+        <button onClick="{{ goBack }}" style="flex:none;width:40px;height:40px;margin-left:-8px;padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:{{ t.title }}">
           <span style="font-family:'Material Symbols Rounded';font-size:clamp(22px,7.18vw,28px);line-height:1;font-variation-settings:'FILL' 0,'wght' 500;font-feature-settings:'liga';-webkit-font-smoothing:antialiased">chevron_left</span>
         </button>
         <div style="flex:1;font-size:clamp(14px,4.62vw,18px);font-weight:800;letter-spacing:0">{{ listTitle }}</div>
@@ -812,9 +812,42 @@ class Component extends DCLogic {
   state={scrolled:false,limit:20,homeNearLimit:5,screen:'home',list:'cat',back:'home',sheet:null,zoom:null,region:{mode:'all'},tmpSido:'서울시',cat:'입주청소',sort:'rec',radius:0,sel:'near0',callKey:'near0',likes:[],loggedIn:false,loginFor:'naver',toast:'',gi:0,locOpen:false,locCity:'서울',loc:'역삼동',query:'',q:''};
   scrollRef=React.createRef();
   storeKey(){return 'cleantong_likes_'+(this.props.theme||'orange');}
-  componentDidMount(){try{this.setState({likes:JSON.parse(localStorage.getItem(this.storeKey())||'[]')});}catch(e){}}
+  componentDidMount(){try{this.setState({likes:JSON.parse(localStorage.getItem(this.storeKey())||'[]')});}catch(e){}
+    if(!this._popBound){this._popBound=true;window.addEventListener('popstate',this.onPop);}
+    try{const v=this.viewOf(this.state);history.replaceState({cd:v,i:0},'');this._histKey=JSON.stringify(v);this._histOv=false;}catch(e){}
+  }
+  componentWillUnmount(){window.removeEventListener('popstate',this.onPop);this._popBound=false;}
+  componentDidUpdate(){this.syncHistory();}
   top(){const el=this.scrollRef.current; if(el) el.scrollTop=0;}
   nav(o){this.setState({...o,limit:o.list==='cat'?20:12},()=>this.top());}
+  // 브라우저 뒤로가기: 화면 이동마다 기록을 남기고, 창(시트·사진 확대)은 한 단계로 쌓는다.
+  viewOf(s){return {screen:s.screen,list:s.list,cat:s.cat,q:s.q,sel:s.sel,back:s.back};}
+  syncHistory(){
+    const s=this.state,v=this.viewOf(s),key=JSON.stringify(v),ov=!!(s.sheet||s.zoom);
+    const lastKey=this._histKey,lastOv=this._histOv;
+    this._histKey=key;this._histOv=ov;
+    if(this._fromPop||lastKey===undefined)return;
+    try{
+      const h=history.state||{},i=h.i||0,el=this.scrollRef.current;
+      if(key!==lastKey){
+        if(h.overlay)history.replaceState({cd:v,i},'');
+        else{history.replaceState({...h,y:el?el.scrollTop:0},'');history.pushState({cd:v,i:i+1},'');}
+      }
+      else if(ov&&!lastOv)history.pushState({cd:v,i:i+1,overlay:true},'');
+      else if(!ov&&lastOv&&h.overlay){this._ignorePop=(this._ignorePop||0)+1;history.back();}
+    }catch(e){}
+  }
+  onPop=e=>{
+    if(this._ignorePop){this._ignorePop--;return;}
+    const st=e.state;if(!st||!st.cd)return;
+    const v=st.cd,changed=JSON.stringify(v)!==this._histKey;
+    this._fromPop=true;
+    this.setState({...v,sheet:null,zoom:null,locOpen:false,...(changed?{limit:v.list==='cat'?20:12,gi:0}:{})},()=>{
+      this._fromPop=false;
+      const el=this.scrollRef.current;if(changed&&el)el.scrollTop=st.y||0;
+    });
+  };
+  goBack(){const h=history.state,s=this.state;if(h&&h.i>0){history.back();return;}this.nav({screen:s.screen==='detail'&&s.back!=='detail'?s.back:'home'});}
   toast(t){clearTimeout(this._t);this.setState({toast:t});this._t=setTimeout(()=>this.setState({toast:''}),2200);}
   open(key){this.nav({back:this.state.screen,screen:'detail',sel:key,gi:0});}
   call(key){this.setState({sheet:'call',callKey:key});}
@@ -905,7 +938,7 @@ class Component extends DCLogic {
       onHomeNearMore:()=>this.setState(s=>({homeNearLimit:Math.min(50,s.homeNearLimit+10)})),
       locLabel:s.loc, locCity:s.locCity, locOpen:s.locOpen, locArrow:s.locOpen?'rotate(180deg)':'none', toggleLoc:()=>this.setState({locOpen:!s.locOpen}), closeLoc:()=>this.setState({locOpen:false}),
       guList:(GU[s.locCity]||[]).map(g=>{const on=g===s.loc;return {label:g,on,bg:on?t.soft:'transparent',color:on?t.main:t.ink,weight:on?700:500,onClick:()=>this.setState({loc:g,locOpen:false})};}),
-      goNear:()=>this.nav({screen:'list',list:'near'}), goHome:()=>this.nav({screen:'home'}), goBack:()=>this.nav({screen:s.back==='detail'?'home':s.back}),
+      goNear:()=>this.nav({screen:'list',list:'near'}), goHome:()=>this.nav({screen:'home'}), goBack:()=>this.goBack(),
       listTitle, isCatList:s.list==='cat', isNearList:s.list==='near', showSort, regionLabel,
       openRegion:()=>this.setState({sheet:'region',tmpSido:r.mode==='sido'?r.sido:s.tmpSido}),
       catTabs:CATS.map(([l])=>{const on=l===s.cat;return {label:l,weight:on?800:500,color:on?'#17191c':'#8a9099',bar:on?t.main:'transparent',onClick:()=>this.setState({cat:l,limit:20},()=>this.top())};}),
