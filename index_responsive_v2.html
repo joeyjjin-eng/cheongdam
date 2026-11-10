@@ -455,7 +455,12 @@ input,button{font-family:inherit}
     </div>
     <div style="height:10px;background:{{ t.surf }}"></div>
     <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:14px;flex:1">
-      <div style="font-size:clamp(14px,4.62vw,18px);font-weight:800">리뷰 <span style="color:{{ t.deep }}">{{ d.reviews }}</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div style="font-size:clamp(14px,4.62vw,18px);font-weight:800">리뷰 <span style="color:{{ t.deep }}">{{ d.reviews }}</span></div>
+        <button onClick="{{ onWriteReview }}" style="flex:none;display:flex;align-items:center;gap:4px;height:32px;padding:0 12px 0 10px;border-radius:16px;border:1px solid {{ t.line }};background:{{ t.soft }};color:{{ t.deep }};font-size:clamp(12px,3.33vw,13px);font-weight:700;cursor:pointer;white-space:nowrap">
+          <span style="font-family:'Material Symbols Rounded';font-size:clamp(14px,4.1vw,16px);line-height:1;font-variation-settings:'FILL' 1,'wght' 500;font-feature-settings:'liga'">edit</span>리뷰 등록
+        </button>
+      </div>
       <div style="display:flex;align-items:center;gap:18px;padding:16px;border-radius:12px;border:1px solid {{ t.divider }}">
         <div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:none">
           <div style="font-size:clamp(27px,8.72vw,34px);font-weight:800;letter-spacing:0">{{ d.rating }}</div>
@@ -915,7 +920,7 @@ class Component extends DCLogic {
       likeIcon:liked?'♥':'♡', likeColor:liked?'#F0445A':'#9aa0a7', likeCount:d0.likes+(liked?1:0),
       toggleLike:()=>{const l=liked?s.likes.filter(x=>x!==d0.key):[...s.likes,d0.key];this.setState({likes:l});try{localStorage.setItem(this.storeKey(),JSON.stringify(l));}catch(e){}this.toast(liked?'찜을 해제했어요':'찜 목록에 저장했어요');},
       talkOpacity:d0.talk?1:0.35, kakaoOpacity:d0.kakao?1:0.35,
-      onTalk:()=>this.special('naver',d0), onKakao:()=>this.special('kakao',d0), onCallDetail:()=>this.call(d0.key),
+      onTalk:()=>this.special('naver',d0), onKakao:()=>this.special('kakao',d0), onCallDetail:()=>this.call(d0.key), onWriteReview:()=>this.toast('리뷰 등록은 준비 중이에요'),
       hasZoom:!!s.zoom, zoomSrc:s.zoom||'',
       onZoom:e=>{e.stopPropagation();const src=e.currentTarget.getAttribute('src');if(src)this.setState({zoom:src});},
       closeZoom:()=>this.setState({zoom:null}),
